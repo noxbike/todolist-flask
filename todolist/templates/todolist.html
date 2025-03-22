@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+Todolist
+{% endblock %}
+{% block content %}
+<div style="text-align: center;">
+    <h1>Todo list</h1>
+</div>
+ <div style="max-width: 800px;margin: auto;">   
+     <table class="table g-start-2" style="grid-row: 2">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">To do</th>
+            <th scope="col">Option</th>
+            <th scope="col">Check</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr>
+            <th scope="row">1</th>
+            <td>Apprendre l'anglais</td>
+            <td>edit delete</td>
+            <td><a href="#">Done</a></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Nettoyer la voiture</td>
+            <td>edit delete</td>
+            <td><a href="#">Done</a></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Portfolio en flask</td>
+            <td>edit delete</td>
+            <td><a href="#">Done</a></td>
+          </tr>
+        </tbody>
+      </table>
+ </div>
+{% endblock %}
