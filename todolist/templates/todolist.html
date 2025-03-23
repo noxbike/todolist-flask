@@ -6,36 +6,63 @@ Todolist
 <div style="text-align: center;">
     <h1>Todo list</h1>
 </div>
- <div style="max-width: 800px;margin: auto;">   
-     <table class="table g-start-2" style="grid-row: 2">
+<div class="container-sm">   
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add task</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            {{ form.title.label }}
+                            {{ form.title() }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.description.label }}
+                            {{ form.description() }}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    {{ form.submit() }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table g-start-2" style="grid-row: 2">
         <thead class="table-light">
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">To do</th>
-            <th scope="col">Option</th>
-            <th scope="col">Check</th>
-          </tr>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">To do</th>
+                <th scope="col">Option</th>
+                <th scope="col">Check</th>
+            </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td>Apprendre l'anglais</td>
-            <td>edit delete</td>
-            <td><a href="#">Done</a></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Nettoyer la voiture</td>
-            <td>edit delete</td>
-            <td><a href="#">Done</a></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Portfolio en flask</td>
-            <td>edit delete</td>
-            <td><a href="#">Done</a></td>
-          </tr>
+            <tr>
+                <th scope="row">1</th>
+                <td>Apprendre l'anglais</td>
+                <td>edit delete</td>
+                <td><a href="#">Done</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Nettoyer la voiture</td>
+                <td>edit delete</td>
+                <td><a href="#">Done</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Portfolio en flask</td>
+                <td>edit delete</td>
+                <td><a href="#">Done</a></td>
+            </tr>
         </tbody>
-      </table>
+    </table>
  </div>
 {% endblock %}

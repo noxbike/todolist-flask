@@ -3,5 +3,21 @@
 Login
 {% endblock %}
 {% block content %}
-<h1>Login page</h1>
+<div style="text-align: center;">
+    <h1>Login</h1>
+</div>
+<form action="" method="post" style="max-width: 400px;margin: auto;">
+    {{ form.hidden_tag() }}
+    <div class="mb3">
+        {{ form.email.label }}
+        {{ form.email() }}
+    </div>
+    <br>
+    <div class="mb3">
+        {{ form.password.label }}
+        {{ form.password() }}
+    </div>
+    <br>
+    {{ form.submit() }}
+</form>
 {% endblock%}

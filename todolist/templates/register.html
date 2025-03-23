@@ -3,5 +3,31 @@
 Register
 {% endblock %}
 {% block content %}
-<h1>Register page</h1>
+<div style="text-align: center;">
+    <h1>Register</h1>
+</div>
+<form action="" method="post" style="max-width: 400px; margin: auto;">
+    {{ form.hidden_tag() }}
+    <div class="mb3">
+        {{ form.name.label }}
+        {{ form.name() }}
+    </div>
+    <br>
+    <div class="mb3">
+        {{ form.email.label }}
+        {{ form.email() }}
+    </div>
+    <br>
+    <div class="mb3">
+        {{ form.password.label }}
+        {{ form.password() }}
+    </div>
+    <br>
+    <div class="mb3">
+        {{ form.password2.label }}
+        {{ form.password2() }}
+    </div>
+    <br>
+    {{ form.submit()}}
+</form>
 {% endblock%}
