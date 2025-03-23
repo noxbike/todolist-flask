@@ -6,6 +6,18 @@ Login
 <div style="text-align: center;">
     <h1>Login</h1>
 </div>
+<div style="max-width: 400px;margin: auto;">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 <form action="" method="post" style="max-width: 400px;margin: auto;">
     {{ form.hidden_tag() }}
     <div class="mb3">

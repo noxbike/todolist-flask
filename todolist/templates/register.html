@@ -6,26 +6,39 @@ Register
 <div style="text-align: center;">
     <h1>Register</h1>
 </div>
-<form action="" method="post" style="max-width: 400px; margin: auto;">
+
+<form action="" method="post" style="max-width: 400px; margin: auto;" novalidate>
     {{ form.hidden_tag() }}
     <div class="mb3">
         {{ form.name.label }}
-        {{ form.name() }}
+        {{ form.name(id="validationServer03", class="form-control" + (' is-invalid' if form.name.errors else '')) }}
+        <div id="validationServer03Feedback" class="invalid-feedback">
+           Your name must have 3 character minimum
+        </div>
     </div>
     <br>
     <div class="mb3">
         {{ form.email.label }}
-        {{ form.email() }}
+        {{ form.email(id="validationServer02", class="form-control" + (' is-invalid' if form.email.errors else '')) }}
+        <div id="validationServer02Feedback" class="invalid-feedback">
+            Email not valid
+        </div>
     </div>
     <br>
     <div class="mb3">
         {{ form.password.label }}
-        {{ form.password() }}
+        {{ form.password(id="validationServer01", class="form-control" + (' is-invalid' if form.password.errors else '')) }}
+        <div id="validationServer01Feedback" class="invalid-feedback">
+            Password must have 8 character minimum
+        </div>
     </div>
     <br>
     <div class="mb3">
         {{ form.password2.label }}
-        {{ form.password2() }}
+        {{ form.password2(id="validationServer04", class="form-control" + (' is-invalid' if form.password2.errors else '')) }}
+        <div id="validationServer04Feedback" class="invalid-feedback">
+            Password must match
+        </div>
     </div>
     <br>
     {{ form.submit()}}
