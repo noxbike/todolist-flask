@@ -6,9 +6,9 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(30), nullable=False, unique=True)
     password_hash = db.Column(db.String(200), nullable=False)
     todos = db.relationship('Todos', backref='user', lazy=True)
 
@@ -23,8 +23,8 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, password)
 
 class Todos(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    todo = db.Column(db.String(80), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    title = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(300), nullable=False)
     completed = db.Column(db.Boolean, default=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

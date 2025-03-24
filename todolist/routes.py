@@ -2,12 +2,21 @@ from todolist import app, db
 from flask import render_template, url_for, flash, get_flashed_messages, redirect
 from todolist.forms import Login_form, Register_form, Todolist_form
 from todolist.models import User, Todos
-from flask_login import login_user, logout_user, login_required
-@app.route('/')
+from flask_login import login_user, logout_user, login_required, current_user
+@app.route('/', methods=['GET','POST'])
 @login_required
 def todolist_page():
     form = Todolist_form()
-    return render_template('todolist.html', form = form)
+    todos = Todos.query.filter_by(owner=current_user.id)
+    if form.validate_on_submit():
+        new_task = Todos(title=form.title.data, description=form.description.data, owner=current_user.id)
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for('todolist_page'))
+    if form.errors != {}:
+        for err_msg in form.errors.values():
+            flash(f'{err_msg}', category='danger')
+    return render_template('todolist.html', form = form, todos = todos)
 
 @app.route('/register', methods=['GET','POST'])
 def register_page():
@@ -18,7 +27,6 @@ def register_page():
         db.session.commit()
         return redirect(url_for('login_page'))
     if form.errors != {}:
-        print(form.errors)
         for err_msg in form.errors.values():
             flash(f'there was and error! : {err_msg}', category='danger')
     return render_template('register.html', form = form)
