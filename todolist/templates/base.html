@@ -17,7 +17,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav" style="margin-left: auto;">
+              <ul class="navbar-nav" style="margin-left: auto; padding-right: 20px;">
                 {% if not current_user.is_authenticated %}
                   <li class="nav-item">
                     <a class="nav-link" href="{{url_for('register_page')}}">Register</a>
@@ -28,7 +28,7 @@
                 {% else %}
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Profile
+                    {{current_user.name}}
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{url_for('parameter_page')}}">Parameter</a></li>

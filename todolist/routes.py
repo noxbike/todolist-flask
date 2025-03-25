@@ -1,5 +1,5 @@
 from todolist import app, db
-from flask import render_template, url_for, flash, get_flashed_messages, redirect
+from flask import render_template, url_for, flash, get_flashed_messages, redirect, request
 from todolist.forms import Login_form, Register_form, Todolist_form
 from todolist.models import User, Todos
 from flask_login import login_user, logout_user, login_required, current_user
@@ -54,3 +54,29 @@ def logout_page():
     logout_user()
     flash('you have logged out!', category = 'info')
     return redirect(url_for('login_page'))
+
+@app.route('/delete/<int:task_id>')
+def delete_task(task_id):
+    task = Todos.query.get(task_id)
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+        return redirect(url_for('todolist_page'))
+    
+@app.route('/completion/<int:task_id>', methods=['GET'])
+def toggle_completion(task_id):
+    task = Todos.query.get(task_id)
+    if(task):
+        task.completed = not task.completed
+        db.session.commit()
+    return redirect(url_for('todolist_page'))
+
+@app.route('/edit/<int:task_id>', methods=['GET','POST'])
+def edit_task(task_id):
+    print(task_id)
+    task =Todos.query.get(task_id)
+    if(task):
+        task.title = request.form['title']
+        task.description = request.form['description']
+        db.session.commit()
+    return redirect(url_for('todolist_page'))

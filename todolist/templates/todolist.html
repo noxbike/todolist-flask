@@ -6,8 +6,8 @@ Todolist
 <div style="text-align: center;">
     <h1>Todo list</h1>
 </div>
-<div class="container-sm">   
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add task</button>
+<div class="container-sm" style="max-width: 500px;">   
+    <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add task</button>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -45,24 +45,54 @@ Todolist
             </div>
         </div>
     </div>
-    <table class="table g-start-2" style="grid-row: 2">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Task</th>
-                <th scope="col">Option</th>
-                <th scope="col">Check</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            {% for todo in todos %}
-                
-                <tr>
-                    <td>{{todo.title}}</td>
-                    <td>more/td>
-                    <td><a href="#">Done</a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% for todo in todos %}
+        <div class="card m-2 ">
+            <div class="card-body d-flex align-items-center justify-content-between w-100 p-2">
+                <input class="form-check-input" type="checkbox" onchange="window.location.href='{{url_for('toggle_completion', task_id=todo.id)}}'" {{'checked' if todo.completed else ''}} value="" id="flexCheckDefault">
+                <p class="m-0"><span class="w-100 {{ 'text-decoration-line-through' if todo.completed else '' }}">{{todo.title}}</span></p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{todo.id}}" data-bs-whatever="@getbootstrap" class="btn btn-secondary d-flex align-items-center justify-content-between m-1"><img src="{{ url_for('static', filename='icons/pensquare.svg')}}" alt="icon" width="15px"> Edit</button>
+                    <div class="modal fade" id="exampleModal{{todo.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {% with messages = get_flashed_messages(with_categories=True) %}
+                                        {% if messages %}
+                                            {% for category, message in messages %}
+                                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                                    {{ message }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
+                                    <form action="{{ url_for('edit_task', task_id=todo.id)}}" method="post">
+                                        {{ form.hidden_tag() }}
+                                        <div class="mb-3">
+                                            {{ form.title.label }}
+                                            {{ form.title(value=todo.title) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form.description.label }}
+                                            {{ form.description(value=todo.description) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" >Edit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('delete_task', task_id=todo.id)}}" class="btn btn-danger d-flex align-items-center justify-content-between m-1"><img src="{{ url_for('static', filename='icons/trash.svg')}}" alt="icon" width="15px"> Delete</a> 
+                </div>
+            </div>
+        </div>
+      {% endfor %}
  </div>
 {% endblock %}
